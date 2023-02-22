@@ -1,0 +1,29 @@
+name: 'Snowplow Data Structures CI - dsctl'
+description: 'Integrate Snowplow Data Structures API into your CI/CD pipeline. Only allows validate or deploy'
+author: 'Evvnt Dev Team'
+inputs:
+  organization-id:
+    description: 'UUID of the Snowplow organization as found in Snowplow BDP Console'
+    required: true
+  api-key:
+    description: 'Snowplow BDP Console API key'
+    required: true
+  command:
+    description: 'Which Data Structures CI command to run. One of: validate, deploy'
+    required: true
+  schemas-path:
+    description: 'Path to the schemas to validate or deploy'
+    required: true
+  environment:
+    description: 'Snowplow environment to validate or deploy to. One of: PROD, DEV'
+    required: true
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  env:
+    ORGANIZATION_ID: ${{ inputs.organization-id }}
+    API_KEY: ${{ inputs.api-key }}
+    COMMAND: ${{ inputs.command }}
+    SCHEMAS_PATH: ${{ inputs.schemas-path }}
+    TARGET_ENV: ${{ inputs.environment }}
